@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><script src="theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendario Maquiavelo</title>
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="enhancements.css">
+  <link rel="stylesheet" href="preview.css">
+  <link rel="stylesheet" href="interaction.css">
+  <link rel="stylesheet" href="multi-picker.css"><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="theme.css?v=3">
+</head>
+<body>
+  <div id="loading" class="loading-overlay hidden" aria-live="polite" aria-busy="true"><div class="loading-card"><div class="loading-mark" aria-hidden="true"><span></span><span></span><span></span></div><strong id="loading-label">Cargando calendario</strong><small>Un momento…</small></div></div>
+  <main id="login" class="login-screen">
+    <section class="login-card">
+      <p class="kicker">MAQUIAVELO SEVILLA</p>
+      <h1>Calendario de eventos</h1>
+      <p>Introduce el código del equipo para acceder.</p>
+      <form id="login-form"><label for="access-code">Código de acceso</label><input id="access-code" type="password" autocomplete="current-password" required><button>Entrar</button><p id="login-error" class="error"></p></form>
+    </section>
+  </main>
+  <main id="app" class="app-shell hidden">
+    <header class="topbar"><div><p class="kicker">MAQUIAVELO SEVILLA</p><h1>Calendario de eventos</h1></div><button id="new-event" class="primary">+ Añadir evento</button></header>
+    <section class="toolbar"><button id="prev-month" aria-label="Mes anterior">←</button><button id="today">Hoy</button><button id="next-month" aria-label="Mes siguiente">→</button><h2 id="month-label"></h2><span id="status-message" role="status"></span></section>
+    <section id="calendar" class="calendar" aria-label="Calendario mensual"></section>
+  </main>
+  <dialog id="event-dialog"><form id="event-form" method="dialog"><div class="dialog-head"><div><p class="kicker">EVENTO</p><h2 id="dialog-title">Añadir evento</h2></div><button type="button" class="icon-button" id="close-dialog">×</button></div><div id="duplicate-banner" class="duplicate-banner hidden">Estás creando una copia de este evento. Cambia el día y la hora antes de guardar.</div><input type="hidden" id="event-id"><label>Título<input id="title" required maxlength="200"></label><div class="date-time-row"><label>Fecha<input id="event-date" type="date" required></label><label>Hora inicio<input id="start-time" type="time" required></label><label>Hora fin<input id="end-time" type="time" required></label></div><button type="button" id="choose-additional-days" class="additional-days-button">+ Añadir otros días</button><small id="additional-days-info" class="field-help">Puedes seleccionar días adicionales para este mismo evento.</small><label>Color del evento<input id="event-color" type="color" value="#1d6b4b"><small class="field-help">Se verá en la pastilla del calendario.</small></label><label>Descripción<textarea id="description" rows="6"></textarea></label><label>Imagen del evento<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small class="field-help">Puedes subir una imagen nueva. Al duplicar un evento, se conserva su imagen.</small></label><div id="image-preview" class="image-preview hidden"></div><div class="two-col"><label>Estado<select id="status"><option value="publish">Publicado</option><option value="draft">Borrador</option><option value="pending">Pendiente</option></select><small id="created-info" class="field-help"></small></label><label>Repetición<select id="repeat"><option value="none">No se repite</option><option value="daily">Cada día</option><option value="weekly">Cada semana</option></select></label></div><label id="repeat-until-wrap" class="hidden">Repetir hasta<input id="repeat-until" type="date"></label><div class="dialog-actions"><button type="button" class="danger ghost hidden" id="cancel-event">Cancelar y enviar a papelera</button><span></span><button type="button" class="ghost" id="duplicate-event">Duplicar</button><button class="primary" id="save-event">Guardar evento</button></div><p id="form-error" class="error"></p></form></dialog>
+  <dialog id="save-confirm-dialog" class="confirm-dialog"><div class="confirm-content"><p class="kicker">REVISAR ANTES DE SUBIR</p><h2>¿Todo correcto?</h2><div id="save-summary" class="save-summary"></div><div class="confirm-actions"><button type="button" class="ghost" id="close-save-confirm">Volver a editar</button><button type="button" class="primary" id="confirm-save">Subir evento</button></div></div></dialog>
+  <dialog id="success-dialog" class="confirm-dialog"><div class="confirm-content"><p class="kicker">LISTO</p><h2 id="success-title">Evento subido correctamente</h2><p id="success-message"></p><div class="confirm-actions"><button type="button" class="ghost" id="close-success">Cerrar</button><button type="button" class="primary" id="view-event">Ver evento publicado</button></div></div></dialog>
+  <dialog id="confirm-dialog" class="confirm-dialog"><div class="confirm-content"><p class="kicker">ACCIÓN IMPORTANTE</p><h2>¿Seguro que quieres borrar este evento?</h2><p>El evento se marcará como cancelado y se enviará a la papelera. Podrás recuperarlo desde WordPress.</p><div class="confirm-actions"><button type="button" class="ghost" id="close-confirm">No, volver</button><button type="button" class="danger-button" id="confirm-cancel">Sí, enviar a papelera</button></div></div></dialog>
+  <dialog id="image-dialog" class="image-dialog"><button type="button" class="image-close" id="close-image">×</button><img id="full-image" alt="Imagen ampliada del evento"></dialog>
+  <dialog id="additional-days-dialog" class="additional-days-dialog"><div class="confirm-content"><div class="dialog-head"><div><p class="kicker">DÍAS ADICIONALES</p><h2>¿Qué otros días?</h2></div><button type="button" class="icon-button" id="close-additional-days">×</button></div><div class="picker-toolbar"><button type="button" id="picker-prev">←</button><strong id="picker-month"></strong><button type="button" id="picker-next">→</button></div><div id="multi-calendar" class="multi-calendar"></div><p id="selected-days-label" class="field-help"></p><div class="confirm-actions"><button type="button" class="ghost" id="cancel-additional-days">Cancelar</button><button type="button" class="primary" id="apply-additional-days">Usar estos días</button></div></div></dialog>
+  <script src="app.js"></script>
+</body>
+</html>

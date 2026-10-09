@@ -1,0 +1,116 @@
+/* Tema compartido Popups + Calendario. Se activa con <html data-theme="dark|light"> (lo fija theme.js o el hub). */
+html[data-theme="dark"]{--t-bg:#18181d;--t-surface:#1f1f26;--t-surface2:#26262e;--t-line:#32323a;--t-text:#f3f3f5;--t-muted:#a8a8b2;--t-accent:#818cf8;--t-accent-soft:#252944;--t-accent-text:#a8afff;--t-ok:#63d3aa;--t-ok-soft:#19382f;--t-danger:#ff919b;--t-danger-soft:#45252b;--t-warn:#e8c86a;--t-warn-soft:#302d1d;--t-primary-bg:#f2f2f4;--t-primary-fg:#111115;--t-primary-hover:#fff;--t-shadow:#00000066;color-scheme:dark}
+html[data-theme="light"]{--t-bg:#f6f6f8;--t-surface:#fff;--t-surface2:#f8f8fa;--t-line:#e4e4e8;--t-text:#111115;--t-muted:#66666f;--t-accent:#626ee7;--t-accent-soft:#eef0ff;--t-accent-text:#626ee7;--t-ok:#087f5b;--t-ok-soft:#e5f7f0;--t-danger:#ba3f4b;--t-danger-soft:#fbe9eb;--t-warn:#946214;--t-warn-soft:#fff5df;--t-primary-bg:#111115;--t-primary-fg:#fff;--t-primary-hover:#2c2c33;--t-shadow:#11111533;color-scheme:light}
+
+/* ---------- base común ---------- */
+html[data-theme] body{background:var(--t-bg)!important;color:var(--t-text)!important;font-family:"Poppins",system-ui,sans-serif}
+html[data-theme] button,html[data-theme] input,html[data-theme] select,html[data-theme] textarea,html[data-theme] .button,html[data-theme] .field{font-family:"Poppins",system-ui,sans-serif}
+html[data-theme] .login-screen{background:var(--t-bg)}
+html[data-theme] .kicker,html[data-theme] .eyebrow{color:var(--t-accent-text)!important}
+html[data-theme] [class*="text-[#66666f]"],html[data-theme] .metric-label,html[data-theme] .meta,html[data-theme] .field-help,html[data-theme] dialog small,html[data-theme] .business-dialog-copy,html[data-theme] .preview-empty{color:var(--t-muted)!important}
+html[data-theme] [class*="border-[#e4e4e8]"]{border-color:var(--t-line)!important}
+html[data-theme] .error,html[data-theme] .step-error{color:var(--t-danger)!important}
+html[data-theme] label{color:var(--t-text)}
+
+/* campos */
+html[data-theme] .field,html[data-theme] dialog .field,html[data-theme] input,html[data-theme] textarea,html[data-theme] select{background:var(--t-surface2)!important;border:1px solid var(--t-line)!important;color:var(--t-text)!important;border-radius:10px}
+html[data-theme] input::placeholder,html[data-theme] textarea::placeholder{color:var(--t-muted);opacity:.7}
+html[data-theme] input:focus,html[data-theme] textarea:focus,html[data-theme] select:focus,html[data-theme] .field:focus{outline:0!important;border-color:var(--t-accent)!important;box-shadow:0 0 0 3px var(--t-accent-soft)!important}
+
+/* botones */
+html[data-theme] button{font-family:inherit}
+html[data-theme] .primary,html[data-theme] button.primary,html[data-theme] dialog#popup-dialog .primary{background:var(--t-primary-bg)!important;border-color:var(--t-primary-bg)!important;color:var(--t-primary-fg)!important}
+html[data-theme] .primary:hover,html[data-theme] button.primary:hover,html[data-theme] dialog#popup-dialog .primary:hover{background:var(--t-primary-hover)!important;border-color:var(--t-primary-hover)!important;color:var(--t-primary-fg)!important}
+html[data-theme] .ghost,html[data-theme] dialog#popup-dialog .ghost{background:transparent!important;border:1px solid var(--t-line)!important;color:var(--t-text)!important}
+html[data-theme] .ghost:hover,html[data-theme] dialog#popup-dialog .ghost:hover{background:var(--t-surface2)!important}
+html[data-theme] button:not(.primary):not(.ghost):not(.close):not(.icon-button):not(.danger-button):not(.business-tab):not(.business-option):not(.picker-day):not(.event-chip):not(.image-close){background:var(--t-surface);border:1px solid var(--t-line);color:var(--t-text);border-radius:10px}
+html[data-theme] button:not(.primary):not(.ghost):not(.close):not(.icon-button):not(.danger-button):not(.business-tab):not(.business-option):not(.picker-day):not(.event-chip):not(.image-close):hover{background:var(--t-surface2);border-color:var(--t-muted)}
+html[data-theme] button.primary{border-radius:10px}
+html[data-theme] .danger{color:var(--t-danger)!important;border-color:var(--t-danger-soft)!important}
+html[data-theme] .danger-button{background:var(--t-danger)!important;border-color:var(--t-danger)!important;color:var(--t-primary-fg)!important}
+html[data-theme] .close,html[data-theme] .icon-button{background:transparent!important;border:0!important;color:var(--t-muted)!important}
+html[data-theme] .additional-days-button{color:var(--t-accent-text)!important}
+
+/* diálogos */
+html[data-theme] dialog,html[data-theme] dialog#popup-dialog,html[data-theme] .operation-card,html[data-theme] .loading-card,html[data-theme] .login-card{background:var(--t-surface)!important;color:var(--t-text)!important;border:1px solid var(--t-line);box-shadow:0 30px 90px var(--t-shadow)!important}
+html[data-theme] dialog::backdrop{background:#0a0a0f99}
+html[data-theme] .dialog-actions,html[data-theme] .range-heading,html[data-theme] .target-picker,html[data-theme] .step-heading,html[data-theme] .business-tabs,html[data-theme] .topbar{border-color:var(--t-line)!important}
+html[data-theme] .range-heading p,html[data-theme] .step-heading p,html[data-theme] .confirm-content p:not(.kicker),html[data-theme] .loading-card small,html[data-theme] .operation-card p,html[data-theme] .operation-card>button{color:var(--t-muted)!important}
+html[data-theme] .loading-overlay{background:color-mix(in srgb,var(--t-bg) 82%,transparent)}
+html[data-theme] .operation-overlay{background:color-mix(in srgb,var(--t-bg) 78%,transparent)}
+html[data-theme] .operation-card{border-color:var(--t-line)}
+html[data-theme] .operation-icon{background:var(--t-accent-soft)!important;color:var(--t-accent-text)!important}
+html[data-theme] .operation-bars{background:transparent!important}
+html[data-theme] .operation-bars span,html[data-theme] .loading-mark span{background:var(--t-accent)!important}
+html[data-theme] .operation-overlay.success .operation-icon{background:var(--t-ok-soft)!important;color:var(--t-ok)!important}
+html[data-theme] .operation-overlay.error .operation-icon{background:var(--t-danger-soft)!important;color:var(--t-danger)!important}
+html[data-theme] .operation-overlay.success .operation-card{border-color:var(--t-ok)}
+html[data-theme] .operation-overlay.error .operation-card{border-color:var(--t-danger)}
+html[data-theme] .operation-overlay{border-radius:0!important;padding:0!important;box-shadow:none!important;color:var(--t-text)!important}
+
+/* ---------- Popups ---------- */
+html[data-theme] .popup-card{background:var(--t-surface)!important;border:1px solid var(--t-line)!important;color:var(--t-text)!important;border-radius:16px}
+html[data-theme] .popup-thumb{background:var(--t-surface2)!important}
+html[data-theme] .pill,html[data-theme] .target-heading>span{background:var(--t-surface2)!important;color:var(--t-muted)!important}
+html[data-theme] .pill.live{background:var(--t-ok-soft)!important;color:var(--t-ok)!important}
+html[data-theme] .empty{border:1px dashed var(--t-line)!important;color:var(--t-muted)!important}
+html[data-theme] .status-badge.active{background:var(--t-ok-soft)!important;color:var(--t-ok)!important}
+html[data-theme] .status-badge.scheduled{background:var(--t-warn-soft)!important;color:var(--t-warn)!important}
+html[data-theme] .status-badge.inactive{background:var(--t-danger-soft)!important;color:var(--t-danger)!important}
+html[data-theme] .status-badge.draft{background:var(--t-surface2)!important;color:var(--t-muted)!important}
+html[data-theme] .schedule-pill,html[data-theme] .schedule-more,html[data-theme] .schedule-empty{border-color:var(--t-line)!important;color:var(--t-muted)!important}
+html[data-theme] .evidence-block{border-color:var(--t-line)!important}
+html[data-theme] .evidence-heading{color:var(--t-text)!important}
+html[data-theme] .evidence-heading small,html[data-theme] .evidence-empty{color:var(--t-muted)!important}
+html[data-theme] .evidence-item{background:var(--t-surface2)!important;border-color:var(--t-line)!important}
+html[data-theme] .evidence-more{border-color:var(--t-accent)!important;color:var(--t-accent-text)!important}
+html[data-theme] .page-result{background:var(--t-surface2)!important;border-color:var(--t-line)!important;color:var(--t-text)!important}
+html[data-theme] .page-result:hover{background:var(--t-accent-soft)!important;border-color:var(--t-accent)!important}
+html[data-theme] .selected-page{background:var(--t-accent-soft)!important;border-color:var(--t-accent)!important;color:var(--t-text)!important}
+html[data-theme] .selected-page button{color:var(--t-muted)!important;background:transparent!important;border:0!important}
+html[data-theme] .stepper span{color:var(--t-muted)}
+html[data-theme] .stepper span b,html[data-theme] .stepper i{border-color:var(--t-line);background:var(--t-line)}
+html[data-theme] .stepper span b{background:transparent}
+html[data-theme] .stepper span.active{color:var(--t-accent-text)}
+html[data-theme] .stepper span.active b{border-color:var(--t-accent);background:var(--t-accent-soft);color:var(--t-accent-text)}
+html[data-theme] .stepper span.done{color:var(--t-ok)}
+html[data-theme] .stepper span.done b{border-color:var(--t-ok);background:var(--t-ok-soft);color:var(--t-ok)}
+html[data-theme] .step-heading>span{color:var(--t-accent-text)}
+html[data-theme] .current-business,html[data-theme] .current-business strong{color:var(--t-text)!important}
+html[data-theme] .current-business small{color:var(--t-accent-text)!important}
+html[data-theme] .business-option{background:var(--t-accent-soft)!important;border-color:var(--t-accent)!important;color:var(--t-text)!important}
+html[data-theme] .business-option small{color:var(--t-muted)!important}
+html[data-theme] .business-option b{background:var(--t-ok-soft)!important;color:var(--t-ok)!important}
+html[data-theme] .business-tab{background:transparent!important;color:var(--t-muted)!important;border:0!important}
+html[data-theme] .business-tab.active{background:var(--t-accent-soft)!important;color:var(--t-accent-text)!important}
+html[data-theme] .business-tab[data-business-tab="new"]{color:var(--t-text)!important}
+html[data-theme] .business-tab[data-business-tab="new"].active{color:var(--t-accent-text)!important}
+html[data-theme] .brand-logo{filter:none}
+html[data-theme="light"] .brand-logo{content:url("assets/factoria-serendipia-light.png")}
+
+/* ---------- Calendario ---------- */
+html[data-theme]{--ink:var(--t-text);--muted:var(--t-muted);--line:var(--t-line);--accent:var(--t-accent);--accent-dark:var(--t-accent-text);--soft:var(--t-accent-soft);--danger:var(--t-danger)}
+html[data-theme] .calendar{background:var(--t-surface);border-color:var(--t-line);box-shadow:none}
+html[data-theme] .weekday{background:var(--t-surface2);color:var(--t-muted)}
+html[data-theme] .day{border-color:var(--t-line)}
+html[data-theme] .day.other{background:var(--t-bg);color:var(--t-muted);opacity:.75}
+html[data-theme] .day.today{background:var(--t-accent-soft)}
+html[data-theme] .day.drop-target{background:var(--t-accent-soft);outline-color:var(--t-accent)}
+html[data-theme] .event-chip{background:var(--t-accent-soft);border-left-color:var(--t-accent);color:var(--t-text)}
+html[data-theme] .event-chip.pending{background:var(--t-warn-soft);border-left-color:var(--t-warn)}
+html[data-theme] .event-chip.draft{background:var(--t-surface2);border-left-color:var(--t-muted)}
+html[data-theme] .event-chip.custom-color,html[data-theme] .event-chip.custom-color.pending,html[data-theme] .event-chip.custom-color.draft{border-left-color:var(--event-color);background:color-mix(in srgb,var(--event-color) 22%,var(--t-surface))}
+html[data-theme] .event-time{color:var(--t-muted)}
+html[data-theme] .toolbar span{color:var(--t-muted)}
+html[data-theme] .image-preview,html[data-theme] .save-summary{background:var(--t-surface2);border-color:var(--t-line);color:var(--t-text)}
+html[data-theme] .save-summary strong{color:var(--t-text)}
+html[data-theme] .duplicate-banner{background:var(--t-accent-soft);border-color:var(--t-accent);color:var(--t-accent-text)}
+html[data-theme] .picker-day{background:var(--t-surface);border:1px solid var(--t-line);color:var(--t-text)}
+html[data-theme] .picker-day.other{background:var(--t-bg);color:var(--t-muted)}
+html[data-theme] .picker-day.selected{background:var(--t-accent);border-color:var(--t-accent);color:var(--t-primary-fg)}
+html[data-theme] .picker-weekday{color:var(--t-muted)}
+html[data-theme] .image-dialog{background:var(--t-surface)!important}
+html[data-theme] .image-close{background:var(--t-surface)!important;color:var(--t-text)!important}
+
+/* Negocio activo */
+html[data-theme] .current-business{margin-top:28px!important}
