@@ -1,0 +1,14 @@
+[
+  {
+    "id": "popups",
+    "label": "Popups",
+    "icon": "◧",
+    "upstream": "http://host.docker.internal:4088"
+  },
+  {
+    "id": "calendario",
+    "label": "Calendario MQV",
+    "icon": "▦",
+    "upstream": "http://host.docker.internal:4087"
+  }
+]
