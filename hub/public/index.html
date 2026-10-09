@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Herramientas</title>
+<link rel="stylesheet" href="fonts.css">
+<script>try{var t=localStorage.getItem('hub-theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<style>
+:root,:root[data-theme="dark"]{--bg:#18181d;--panel:#1f1f26;--line:#32323a;--text:#f3f3f5;--mute:#a8a8b2;--accent:#f3f3f5;--accent-fg:#111115;--sb-bg:#f6f6f8;--sb-text:#111115;--sb-mute:#66666f;--sb-line:#e4e4e8;--sb-hover:#ececf0;--sb-active:#fff;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f6f6f8;--panel:#fff;--line:#e4e4e8;--text:#111115;--mute:#66666f;--accent:#111115;--accent-fg:#fff;--sb-bg:#18181d;--sb-text:#f3f3f5;--sb-mute:#a8a8b2;--sb-line:#32323a;--sb-hover:#26262e;--sb-active:#2c2c35;color-scheme:light}
+.logo{display:block;width:100%;max-width:190px;height:auto;margin:6px 8px 18px}
+.logo-for-dark{display:block}.logo-for-light{display:none}:root[data-theme="light"] .logo-for-dark{display:none}:root[data-theme="light"] .logo-for-light{display:block}
+aside .logo-for-dark{display:none}aside .logo-for-light{display:block}:root[data-theme="light"] aside .logo-for-dark{display:block}:root[data-theme="light"] aside .logo-for-light{display:none}
+#login .logo{max-width:220px;margin:0 auto 6px}
+.theme{display:flex;gap:4px;background:var(--sb-hover);border:1px solid var(--sb-line);border-radius:10px;padding:3px;margin:6px 6px 2px}
+.theme button{flex:1;border:0;background:none;padding:7px 8px;font-size:13px;color:var(--sb-mute);border-radius:8px}
+.theme button.on{background:var(--sb-active);color:var(--sb-text);font-weight:600;box-shadow:0 0 0 1px var(--sb-line)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--bg);color:var(--text);font:15px/1.5 'Poppins',system-ui,sans-serif}
+.hidden{display:none!important}
+#login{height:100%;display:grid;place-items:center}#login form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;width:min(360px,calc(100% - 32px));display:grid;gap:12px}
+input,button{font:inherit;font-family:'Poppins',system-ui,sans-serif;border-radius:10px;border:1px solid var(--line);padding:10px 12px;background:var(--bg);color:var(--text)}button{cursor:pointer}button.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+.err{color:#e5646f;min-height:1.2em;margin:0;font-size:13px}
+#app{display:grid;grid-template-columns:240px 1fr;height:100%}
+aside{background:var(--sb-bg);color:var(--sb-text);border-right:1px solid var(--sb-line);padding:18px 12px;display:flex;flex-direction:column;gap:6px}
+aside h1{font-size:13px;letter-spacing:.12em;color:var(--sb-mute);margin:4px 10px 14px;text-transform:uppercase}
+.tool{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:var(--sb-mute);background:none;border:0;text-align:left;width:100%}
+.tool:hover{background:var(--sb-hover);color:var(--sb-text)}.tool.active{background:var(--sb-active);color:var(--sb-text);font-weight:600;box-shadow:inset 3px 0 0 var(--sb-text),0 0 0 1px var(--sb-line)}
+.tool span.i{width:20px;text-align:center}.spacer{flex:1}.logout{font-size:13px;color:var(--sb-mute);border:0;background:none;text-align:left;padding:8px 12px}
+main{position:relative;min-width:0}iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.empty{height:100%;display:grid;place-items:center;color:var(--mute)}
+#burger{display:none}
+@media (max-width:760px){#app{grid-template-columns:1fr;grid-template-rows:auto 1fr}aside{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}aside h1,.spacer,aside .logo{display:none!important}.theme{margin:0;flex:none}.theme button{white-space:nowrap}.tool{width:auto;white-space:nowrap}.logout{white-space:nowrap}}
+</style></head><body>
+<div id="login" class="hidden"><form id="login-form"><img class="logo logo-for-dark" src="logo-dark.png" alt="Factoría Serendipia"><img class="logo logo-for-light" src="logo-light.png" alt="Factoría Serendipia"><input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password" required><button class="primary">Entrar</button><p class="err" id="login-error"></p></form></div>
+<div id="app" class="hidden"><aside><img class="logo logo-for-dark" src="logo-dark.png" alt="Factoría Serendipia"><img class="logo logo-for-light" src="logo-light.png" alt="Factoría Serendipia"><nav id="nav" style="display:contents"></nav><div class="spacer"></div><div class="theme" id="theme"><button data-t="light">☀ Claro</button><button data-t="dark">☾ Oscuro</button></div><button class="logout" id="logout">Cerrar sesión</button></aside><main id="main"><div class="empty">Elige una herramienta</div></main></div>
+<script>
+const $ = (s) => document.querySelector(s);
+const frames = {};
+function fitFrame(id) {
+  const f = frames[id]; if (!f) return;
+  try { const d = f.contentDocument; if (d) d.documentElement.dataset.theme = document.documentElement.dataset.theme; } catch {}
+}
+function open(id) {
+  document.querySelectorAll('.tool').forEach((b) => b.classList.toggle('active', b.dataset.id === id));
+  $('#main').querySelector('.empty')?.remove();
+  for (const [k, f] of Object.entries(frames)) f.classList.toggle('hidden', k !== id);
+  if (!frames[id]) { const f = document.createElement('iframe'); f.src = `/t/${id}/`; f.title = id; f.onload = () => fitFrame(id); $('#main').appendChild(f); frames[id] = f; }
+  fitFrame(id);
+  try { history.replaceState(null, '', `#${id}`); } catch {}
+}
+async function start() {
+  const r = await fetch('/api/tools');
+  if (!r.ok) { $('#app').classList.add('hidden'); $('#login').classList.remove('hidden'); return; }
+  const tools = await r.json();
+  $('#login').classList.add('hidden'); $('#app').classList.remove('hidden');
+  $('#nav').innerHTML = tools.map((t) => `<button class="tool" data-id="${t.id}"><span class="i">${t.icon || '•'}</span>${t.label}</button>`).join('');
+  document.querySelectorAll('.tool').forEach((b) => b.onclick = () => open(b.dataset.id));
+  const wanted = location.hash.slice(1); open(tools.some((t) => t.id === wanted) ? wanted : tools[0]?.id);
+}
+$('#login-form').onsubmit = async (e) => { e.preventDefault(); $('#login-error').textContent = ''; const r = await fetch('/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: $('#pw').value }) }); if (r.ok) start(); else $('#login-error').textContent = (await r.json()).error; };
+$('#logout').onclick = async () => { await fetch('/logout', { method: 'POST' }); location.reload(); };
+function setTheme(t) { document.documentElement.dataset.theme = t; try { localStorage.setItem('hub-theme', t); } catch {} document.querySelectorAll('#theme button').forEach((b) => b.classList.toggle('on', b.dataset.t === t)); Object.keys(frames).forEach(fitFrame); }
+document.querySelectorAll('#theme button').forEach((b) => b.onclick = () => setTheme(b.dataset.t));
+setTheme(document.documentElement.dataset.theme);
+start();
+</script></body></html>
