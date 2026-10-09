@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="theme.js"></script>
+<title>Nueva herramienta</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="theme.css">
+<style>
+  /* Usa SIEMPRE los tokens --t-* para que cambie con el tema */
+  body{margin:0;font-family:"Poppins",system-ui,sans-serif}
+  main{max-width:960px;margin:0 auto;padding:32px 24px}
+  .card{background:var(--t-surface);border:1px solid var(--t-line);border-radius:16px;padding:20px}
+  .hidden{display:none!important}
+</style></head><body>
+<main id="login" class="hidden"><form id="login-form" class="card" style="max-width:360px;display:grid;gap:12px;margin:12vh auto">
+  <label for="code">Código de acceso</label><input id="code" type="password" class="field" required>
+  <button class="primary">Entrar</button><p id="login-error" class="error"></p></form></main>
+
+<main id="app" class="hidden">
+  <p class="eyebrow">NUEVA HERRAMIENTA</p>
+  <h1 style="margin:0 0 20px">Título de la herramienta</h1>
+  <div class="card"><p id="out" style="margin:0 0 12px;color:var(--t-muted)">…</p><button id="ping" class="primary">Probar API</button></div>
+</main>
+
+<script>
+  const $ = (s) => document.querySelector(s);
+  // RUTAS RELATIVAS: sin "/" inicial.
+  const api = async (path, options = {}) => {
+    const r = await fetch(`api/${path}`, { headers: { 'content-type': 'application/json' }, ...options });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || 'Error');
+    return data;
+  };
+  const show = () => { $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); };
+  fetch('auth/check').then((r) => r.ok ? show() : $('#login').classList.remove('hidden'));
+  $('#login-form').onsubmit = async (e) => { e.preventDefault(); const r = await fetch('auth', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code: $('#code').value }) }); if (r.ok) show(); else $('#login-error').textContent = (await r.json()).error; };
+  $('#ping').onclick = async () => { try { $('#out').textContent = (await api('ejemplo')).mensaje; } catch (e) { $('#out').textContent = e.message; } };
+</script></body></html>
