@@ -1,0 +1,8 @@
+{
+  "name": "maquiavelo-eventos-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"start": "npm run build:styles && node server.js", "build:styles": "tailwindcss -i ./public/tailwind.css -o ./public/tailwind-built.css --minify"},
+  "devDependencies": {"@tailwindcss/cli": "^4.1.13", "tailwindcss": "^4.1.13"}
+}
